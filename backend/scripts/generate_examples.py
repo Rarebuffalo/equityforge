@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate example PDF reports from sample documents."""
+"""Batch script to generate sample PDF equity research reports."""
 
 import sys
 from pathlib import Path
@@ -20,7 +20,6 @@ SAMPLE_JOBS = [
 ]
 
 
-
 def main():
     OUTPUT_DIR.mkdir(exist_ok=True)
     for company_name, filename in SAMPLE_JOBS:
@@ -32,19 +31,8 @@ def main():
         pdf_bytes, report = generate_report(company_name, content, filename)
         out = OUTPUT_DIR / f"{company_name.replace(' ', '_')}_report.pdf"
         out.write_bytes(pdf_bytes)
-        print(f"Generated: {out} ({len(pdf_bytes):,} bytes) — rating={report.rating}")
-
-    # Copy working screenshot to docs/equityforge_demo.png
-    import shutil
-    brain_dir = Path("/home/Krishna-Singh/.gemini/antigravity-ide/brain/48a9146d-a4d3-4792-9be8-affbe0aae4b4")
-    matches = sorted(brain_dir.glob("media__*.png"))
-    if matches:
-        docs_dir = Path(__file__).resolve().parent.parent.parent / "docs"
-        docs_dir.mkdir(exist_ok=True)
-        shutil.copyfile(matches[-1], docs_dir / "equityforge_demo.png")
-        print(f"Updated docs/equityforge_demo.png from {matches[-1].name}")
+        print(f"Generated: {out} ({len(pdf_bytes):,} bytes) — rating={report.rating or 'N/A'}")
 
 
 if __name__ == "__main__":
     main()
-
