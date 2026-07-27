@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>{{ report.company_name }} — Equity Research Report</title>
+  <link rel="stylesheet" href="report.css"/>
+</head>
+<body>
+
+{# ==================== PAGE 1 ==================== #}
+<div class="site-header">
+  <span class="brand">EquityForge Research</span>
+  <span class="tag">equityforge.ai</span>
+</div>
+
+<div class="report-top">
+  <div class="report-meta">
+    {% if report.result_update_label %}
+    <div class="result-label">{{ report.result_update_label }}</div>
+    {% endif %}
+    <div class="retail-label">Retail Equity Research</div>
+    <div class="company-title">{{ report.company_name }}</div>
+    <div class="sector-line">
+      {% if report.sector %}Sector: {{ report.sector }}{% endif %}
+      {% if report.report_date %} &nbsp; {{ report.report_date }}{% endif %}
+    </div>
+    {% if report.data_as_of %}
+    <div style="font-size:7pt;color:#888;">Data as of: {{ report.data_as_of }}</div>
+    {% endif %}
+  </div>
+
+  <div class="rating-box">
+    {% if report.rating %}
+    <div class="rating-badge {{ report.rating|lower }}">{{ report.rating }}</div>
+    {% else %}
+    <div class="rating-badge na">N/A</div>
+    {% endif %}
+    <div class="target-block">
+      <div class="label">Target</div>
+      <div class="value">{{ report.target_price or 'N/A' }}</div>
+    </div>
+    <div class="cmp-row">
+      <span>CMP</span>
+      <span><strong>{{ report.cmp or 'N/A' }}</strong></span>
+    </div>
+    {% if report.expected_return %}
+    <div class="cmp-row">
+      <span>Return</span>
+      <span>{{ report.expected_return }}</span>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% if report.headline %}
+<div class="headline">{{ report.headline }}</div>
+{% endif %}
+
+<div class="two-col">
+  <div class="col-left">
+    {% if report.business_overview %}
+    <div class="narrative">{{ report.business_overview }}</div>
+    {% endif %}
+
+    {% if report.key_highlights %}
+    <ul class="bullet-list">
+      {% for item in report.key_highlights %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+
+  <div class="col-right">
+    <div class="section-title-sm">Company Data</div>
+    <table class="data-table">
+      <tbody>
+        {% set cd = report.company_data %}
+        <tr><td class="metric-label">Market Cap (Rs.cr)</td><td class="right">{{ cd.market_cap or 'N/A' }}</td></tr>
+        <tr><td class="metric-label">52 Week High — Low (Rs.)</td><td class="right">{{ cd.week_52_high_low or 'N/A' }}</td></tr>
+        <tr><td class="metric-label">Enterprise Value (Rs. cr)</td><td class="right">{{ cd.enterprise_value or 'N/A' }}</td></tr>
+        <tr><td class="metric-label">Outstanding Shares (cr)</td><td class="right">{{ cd.outstanding_shares or 'N/A' }}</td></tr>
+        <tr><td class="metric-label">Free Float (%)</td><td class="right">{{ cd.free_float or 'N/A' }}</td></tr>
+        <tr><td class="metric-label">Dividend Yield (%)</td><td class="right">{{ cd.dividend_yield or 'N/A' }}</td></tr>
+        <tr><td class="metric-label">6m average volume (cr)</td><td class="right">{{ cd.avg_volume_6m or 'N/A' }}</td></tr>
+        <tr><td class="metric-label">Beta</td><td class="right">{{ cd.beta or 'N/A' }}</td></tr>
+        <tr><td class="metric-label">Face value (Rs.)</td><td class="right">{{ cd.face_value or 'N/A' }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% if report.shareholding %}
+<div class="section-title-sm">Shareholding (%)</div>
+<table class="data-table">
+  <thead>
+    <tr>
+      <th></th>
+      {% for row in report.shareholding %}
+      <th class="center">{{ row.period }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td class="metric-label">Promoters</td>{% for row in report.shareholding %}<td class="center">{{ row.promoters or 'N/A' }}</td>{% endfor %}</tr>
+    <tr><td class="metric-label">FII's</td>{% for row in report.shareholding %}<td class="center">{{ row.fiis or 'N/A' }}</td>{% endfor %}</tr>
+    <tr><td class="metric-label">MFs/Institutions</td>{% for row in report.shareholding %}<td class="center">{{ row.mfs_institutions or 'N/A' }}</td>{% endfor %}</tr>
+    <tr><td class="metric-label">Public</td>{% for row in report.shareholding %}<td class="center">{{ row.public or 'N/A' }}</td>{% endfor %}</tr>
+    <tr><td class="metric-label">Others</td>{% for row in report.shareholding %}<td class="center">{{ row.others or 'N/A' }}</td>{% endfor %}</tr>
+  </tbody>
+</table>
+{% endif %}
+
+{% if report.price_performance %}
+<div class="section-title-sm">Price Performance</div>
+<table class="data-table">
+  <thead>
+    <tr>
+      <th></th>
+      {% for pp in report.price_performance %}
+      <th class="center">{{ pp.period }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="metric-label">Absolute Return</td>
+      {% for pp in report.price_performance %}<td class="center">{{ pp.absolute_return or 'N/A' }}</td>{% endfor %}
+    </tr>
+    <tr>
+      <td class="metric-label">Benchmark Return</td>
+      {% for pp in report.price_performance %}<td class="center">{{ pp.benchmark_return or 'N/A' }}</td>{% endfor %}
+    </tr>
+    <tr>
+      <td class="metric-label">Relative Return</td>
+      {% for pp in report.price_performance %}<td class="center">{{ pp.relative_return or 'N/A' }}</td>{% endfor %}
+    </tr>
+  </tbody>
+</table>
+{% endif %}
+
+<div class="section-title">Outlook &amp; Valuation</div>
+<div class="narrative">
+  {{ report.outlook_valuation or report.investment_thesis or 'Not Available' }}
+</div>
+
+{% if report.stock_type or report.nse_code %}
+<table class="stock-strip">
+  <tr>
+    <td class="label">Stock Type</td><td>{{ report.stock_type or 'N/A' }}</td>
+    <td class="label">NSE Code</td><td>{{ report.nse_code or 'N/A' }}</td>
+    <td class="label">BSE Code</td><td>{{ report.bse_code or 'N/A' }}</td>
+    <td class="label">Time Frame</td><td>{{ report.time_frame or '12 Months' }}</td>
+  </tr>
+</table>
+{% endif %}
+
+{% if report.annual_estimates %}
+<div class="section-title-sm">Quarterly Financials Consolidated — Annual Estimates</div>
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Y.E March (cr)</th>
+      {% for yr in report.annual_estimate_years %}
+      <th class="right">{{ yr }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in report.annual_estimates %}
+    <tr>
+      <td class="metric-label">{{ row.metric }}</td>
+      <td class="right">{{ row.fy25a or 'N/A' }}</td>
+      <td class="right">{{ row.fy26e or 'N/A' }}</td>
+      <td class="right">{{ row.fy27e or 'N/A' }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if report.quarterly_financials %}
+<div class="section-title-sm">Quarterly Financials Consolidated</div>
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Rs.cr</th>
+      <th class="right">{{ report.quarterly_period_current or 'Current Q' }}</th>
+      <th class="right">{{ report.quarterly_period_previous_year or 'Prev Year Q' }}</th>
+      <th class="right">YoY Growth (%)</th>
+      <th class="right">{{ report.quarterly_period_previous_q or 'Prev Q' }}</th>
+      <th class="right">QoQ Growth (%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in report.quarterly_financials %}
+    <tr>
+      <td class="metric-label">{{ row.metric }}</td>
+      <td class="right">{{ row.current_q or 'N/A' }}</td>
+      <td class="right">{{ row.previous_year_q or 'N/A' }}</td>
+      <td class="right">{{ row.yoy_growth or 'N/A' }}</td>
+      <td class="right">{{ row.previous_q or 'N/A' }}</td>
+      <td class="right">{{ row.qoq_growth or 'N/A' }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{# ==================== PAGE 2 ==================== #}
+<div class="page-break"></div>
+<div class="site-header">
+  <span class="brand">EquityForge Research</span>
+  <span class="tag">equityforge.ai</span>
+</div>
+
+<div class="section-title">Key Highlights</div>
+{% if report.key_highlights %}
+<ul class="bullet-list">
+  {% for item in report.key_highlights %}
+  <li>{{ item }}</li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="narrative na-value">Not Available</p>
+{% endif %}
+
+{% if report.industry_outlook %}
+<div class="section-title">Industry Analysis</div>
+<div class="narrative">{{ report.industry_outlook }}</div>
+{% endif %}
+
+{% if report.chart_revenue_base64 or report.chart_profit_base64 or report.chart_margins_base64 %}
+<div class="section-title">Financial Charts</div>
+<div class="charts-row">
+  {% if report.chart_revenue_base64 %}
+  <div class="chart-box">
+    <img src="data:image/png;base64,{{ report.chart_revenue_base64 }}" alt="Revenue Trend"/>
+    <div class="chart-caption">Revenue Trend</div>
+  </div>
+  {% endif %}
+  {% if report.chart_profit_base64 %}
+  <div class="chart-box">
+    <img src="data:image/png;base64,{{ report.chart_profit_base64 }}" alt="Profit Growth"/>
+    <div class="chart-caption">EBITDA &amp; PAT Growth</div>
+  </div>
+  {% endif %}
+  {% if report.chart_margins_base64 %}
+  <div class="chart-box">
+    <img src="data:image/png;base64,{{ report.chart_margins_base64 }}" alt="Margin Comparison"/>
+    <div class="chart-caption">Margin Comparison</div>
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+
+{% if report.analyst_summary %}
+<div class="section-title">Analyst Style Summary</div>
+<div class="narrative">{{ report.analyst_summary }}</div>
+{% endif %}
+
+{% if report.risks %}
+<div class="section-title">Risk Analysis</div>
+<ul class="risk-list">
+  {% for risk in report.risks %}
+  <li>{{ risk }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{# ==================== PAGE 3 — Historical Financials ==================== #}
+{% if report.historical_pl %}
+<div class="page-break"></div>
+<div class="site-header">
+  <span class="brand">EquityForge Research</span>
+  <span class="tag">equityforge.ai</span>
+</div>
+
+<div class="section-title">Consolidated Financials — Profit &amp; Loss</div>
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Y.E March (Rs. Cr)</th>
+      {% for yr in report.historical_pl_years %}
+      <th class="right">{{ yr }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in report.historical_pl %}
+    <tr>
+      <td class="metric-label">{{ row.metric }}</td>
+      {% for val in row.values %}
+      <td class="right">{{ val or 'N/A' }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if report.historical_bs %}
+<div class="section-title-sm">Balance Sheet</div>
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Y.E March (Rs. Cr)</th>
+      {% for yr in report.historical_bs_years %}
+      <th class="right">{{ yr }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in report.historical_bs %}
+    <tr>
+      <td class="metric-label">{{ row.metric }}</td>
+      {% for val in row.values %}
+      <td class="right">{{ val or 'N/A' }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if report.ratios %}
+<div class="section-title-sm">Key Ratios</div>
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Metric</th>
+      {% for yr in report.ratio_years %}
+      <th class="right">{{ yr }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% set current_cat = namespace(val='') %}
+    {% for row in report.ratios %}
+      {% if row.category != current_cat.val %}
+        {% set current_cat.val = row.category %}
+        <tr class="section-header"><td colspan="{{ report.ratio_years|length + 1 }}">{{ row.category }}</td></tr>
+      {% endif %}
+    <tr>
+      <td class="metric-label">{{ row.metric }}</td>
+      {% for val in row.values %}
+      <td class="right">{{ val or 'N/A' }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{# ==================== PAGE 4 — Disclaimer ==================== #}
+<div class="page-break"></div>
+<div class="site-header">
+  <span class="brand">EquityForge Research</span>
+  <span class="tag">equityforge.ai</span>
+</div>
+
+<div class="section-title">Investment Rating Criteria</div>
+<table class="data-table">
+  <thead>
+    <tr><th>Ratings</th><th>Large caps</th><th>Midcaps</th><th>Small Caps</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Buy</td><td>Upside above 10%</td><td>Upside above 15%</td><td>Upside above 20%</td></tr>
+    <tr><td>Hold</td><td>Upside 0%–10%</td><td>Upside 0%–10%</td><td>Upside 0%–10%</td></tr>
+    <tr><td>Reduce/Sell</td><td>Downside &gt; 0%</td><td>Downside &gt; 0%</td><td>Downside &gt; 0%</td></tr>
+  </tbody>
+</table>
+
+<div class="disclaimer">
+  <div class="disclaimer-title">DISCLAIMER &amp; DISCLOSURES</div>
+  <p>
+    This research report has been generated by EquityForge, an AI-powered equity research report generator.
+    The information contained herein is derived from user-uploaded financial documents and AI-assisted analysis.
+    This report is for informational purposes only and does not constitute investment advice, an offer, or a solicitation.
+  </p>
+  <p>
+    EquityForge uses Large Language Models to extract and synthesize financial data. While every effort is made to
+    avoid hallucination, users should independently verify all figures, ratios, and conclusions before making
+    investment decisions. Missing data fields are marked as "N/A" or "Not Available" and are not fabricated.
+  </p>
+  <p>
+    <strong>Standard Warning:</strong> Investment in securities market are subject to market risks.
+    Read all the related documents carefully before investing.
+  </p>
+  <p class="equityforge-tagline">
+    EquityForge — Transform Financial Documents into Institutional-Quality Equity Research Reports with AI.
+  </p>
+</div>
+
+<div class="footer-note">
+  Generated by EquityForge &bull; {{ report.report_date or 'Auto-generated report' }}
+</div>
+
+</body>
+</html>
