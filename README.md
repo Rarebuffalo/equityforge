@@ -16,7 +16,10 @@ EquityForge is a production-quality financial research automation platform that 
 
 ## System Architecture & Workflow
 
+*For comprehensive technical design and pipeline specifications, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).*
+
 ```
+
 ┌──────────────────────────┐
 │   Uploaded Document      │ (PDF / TXT / CSV)
 └────────────┬─────────────┘
