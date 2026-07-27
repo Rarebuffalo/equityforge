@@ -6,7 +6,7 @@ EquityForge is a production-quality financial research automation platform that 
 
 ---
 
-## 🌟 Application Preview
+## Application Preview
 
 ![EquityForge Working Demo](docs/equityforge_demo.png)
 
@@ -14,7 +14,7 @@ EquityForge is a production-quality financial research automation platform that 
 
 ---
 
-## 🏗️ System Architecture & Workflow
+## System Architecture & Workflow
 
 ```
 ┌──────────────────────────┐
@@ -65,22 +65,22 @@ EquityForge is a production-quality financial research automation platform that 
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-- 📑 **Multi-Format Document Parsing**: Full support for PDF, TXT, and CSV context documents.
-- 🤖 **Dual LLM Provider Support**: Supports both **Google Gemini API** (`GEMINI_API_KEY`) and **OpenAI API** (`OPENAI_API_KEY`) with automatic fallback to an offline heuristic parser (`MOCK_LLM=true`).
-- 🛡️ **Zero-Hallucination Guardrails**: Unstated metrics render cleanly as `N/A` or `Not Available` rather than fabricated values.
-- 📊 **Programmatic Visualizations**: Automated Matplotlib charts for Revenue Trend, EBITDA & PAT Growth, and Margin Comparison.
-- 📄 **Geojit Institutional PDF Template (4 Pages)**:
+- **Multi-Format Document Parsing**: Full support for PDF, TXT, and CSV context documents.
+- **Dual LLM Provider Support**: Supports both **Google Gemini API** (`GEMINI_API_KEY`) and **OpenAI API** (`OPENAI_API_KEY`) with automatic fallback to an offline heuristic parser (`MOCK_LLM=true`).
+- **Zero-Hallucination Guardrails**: Unstated metrics render cleanly as `N/A` or `Not Available` rather than fabricated values.
+- **Programmatic Visualizations**: Automated Matplotlib charts for Revenue Trend, EBITDA & PAT Growth, and Margin Comparison.
+- **Geojit Institutional PDF Template (4 Pages)**:
   - **Page 1:** Header, Result Update Label, Rating Badge (BUY/HOLD/SELL), Target Price & CMP, Headline, 2-Column Overview + Key Highlights, Company Data table, Shareholding %, Price Performance, Outlook & Valuation, Stock Strip.
   - **Page 2:** Key Highlights, Industry Analysis, Financial Charts row, Analyst Style Summary, Risk Analysis list.
   - **Page 3:** Consolidated Historical P&L, Balance Sheet, and Key Ratios grouped by category.
   - **Page 4:** Investment Rating Criteria table, Disclosures & Disclaimer, and EquityForge tagline.
-- 🎨 **Modern Next.js Frontend**: Drag-and-drop file upload, live step progress bar (`Parsing` → `Extracting` → `Charting` → `Rendering PDF`), and instant 1-click download.
+- **Modern Next.js Frontend**: Drag-and-drop file upload, live step progress bar (`Parsing` → `Extracting` → `Charting` → `Rendering PDF`), and instant 1-click download.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology | Description |
 |-------|-----------|-------------|
@@ -95,7 +95,7 @@ EquityForge is a production-quality financial research automation platform that 
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 equityforge/
@@ -140,7 +140,7 @@ equityforge/
 
 ---
 
-## ⚙️ Environment Variables
+## Environment Variables
 
 Copy `backend/.env.example` to `backend/.env` to configure API keys:
 
@@ -155,7 +155,7 @@ Copy `backend/.env.example` to `backend/.env` to configure API keys:
 
 ---
 
-## 🚀 Quick Start Guide
+## Quick Start Guide
 
 ### Prerequisites
 
@@ -196,7 +196,7 @@ Open **[http://localhost:3000](http://localhost:3000)** (or `http://localhost:30
 
 ---
 
-## 🧪 Testing & Verification
+## Testing & Verification
 
 ### Batch Test Script (Generate PDF, TXT & CSV Reports)
 
@@ -217,6 +217,6 @@ Output generated in `examples/`:
 
 ---
 
-## 📄 License
+## License
 
 MIT
