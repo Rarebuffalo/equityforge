@@ -10,10 +10,8 @@ node_modules/
 .next/
 out/
 
-# Generated
-examples/*.pdf
-
 # OS
+
 .DS_Store
 *.swp
 
