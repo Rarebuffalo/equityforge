@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Node
+node_modules/
+.next/
+out/
+
+# Generated
+examples/*.pdf
+
+# OS
+.DS_Store
+*.swp
+
+# IDE
+.idea/
+.vscode/
